@@ -51,7 +51,7 @@ function registerEventListeners()
 }
 
 
-export function gatherParameters()
+export function gatherParameters( preset )
 {
     let inputs = {
               frets: document.getElementById( 'frets-input' ),
@@ -87,11 +87,11 @@ export function gatherParameters()
 
     if( !checkAccidentals() ) { /* Invalid tuning */ }   
 
-    buildStrings() 
+    buildStrings( preset ) 
 }
 
 
-function buildStrings( ) 
+function buildStrings( preset ) 
 {
     for( let x in data.tuning ) 
     {
@@ -112,7 +112,7 @@ function buildStrings( )
             }
         }
     }
-    loadPreset( data )
+    if( preset ) loadPreset( data )
     draw( data ) 
 }
 
@@ -128,7 +128,7 @@ function checkAccidentals()
 function clearFretboard() 
 {
     for( let x of data.strings ) x.selected = [] 
-    gatherParameters() 
+    gatherParameters( false ) 
 }
 
 

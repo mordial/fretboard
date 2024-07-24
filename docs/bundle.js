@@ -28,7 +28,7 @@ let fretboard = {}
 let offset = {
     top: 30,
  bottom: 50,
-   left: 20,
+   left: 35,
   right: 20 
 }
 
@@ -47,10 +47,19 @@ function draw( data )
         fretboard.height 
     ) 
 
-    for( let x = 0; x < stringCount; x++ ) 
+    for( let x = 0; x < stringCount + 1; x++ ) 
     {
         ctx.moveTo( offset.left,                   offset.top + ( x * stringGap ) ) 
         ctx.lineTo( offset.left + fretboard.width, offset.top + ( x * stringGap ))
+
+        ctx.fillStyle = colours.leftClick
+        ctx.font = "17px Poppins"
+        ctx.textAlign = "center"
+        ctx.fillText( 
+            data.strings[ x ].pitch.toUpperCase(),
+            10, 
+            offset.top + ( x * stringGap ) + 5,
+        )
     }
     
     for( let x = 0; x < fretCount; x++ ) 
@@ -260,7 +269,7 @@ function registerEventListeners()
 }
 
 
-function gatherParameters()
+function gatherParameters( preset )
 {
     let inputs = {
               frets: document.getElementById( 'frets-input' ),
@@ -296,11 +305,11 @@ function gatherParameters()
 
     if( !checkAccidentals() ) { /* Invalid tuning */ }   
 
-    buildStrings() 
+    buildStrings( preset ) 
 }
 
 
-function buildStrings( ) 
+function buildStrings( preset ) 
 {
     for( let x in data.tuning ) 
     {
@@ -321,7 +330,7 @@ function buildStrings( )
             }
         }
     }
-    (0,_presets__WEBPACK_IMPORTED_MODULE_1__["default"])( data )
+    if( preset ) (0,_presets__WEBPACK_IMPORTED_MODULE_1__["default"])( data )
     ;(0,_canvas__WEBPACK_IMPORTED_MODULE_0__.draw)( data ) 
 }
 
@@ -337,7 +346,7 @@ function checkAccidentals()
 function clearFretboard() 
 {
     for( let x of data.strings ) x.selected = [] 
-    gatherParameters() 
+    gatherParameters( false ) 
 }
 
 

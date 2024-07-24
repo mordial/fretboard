@@ -10,7 +10,7 @@ let fretboard = {}
 let offset = {
     top: 30,
  bottom: 50,
-   left: 20,
+   left: 35,
   right: 20 
 }
 
@@ -29,10 +29,19 @@ export function draw( data )
         fretboard.height 
     ) 
 
-    for( let x = 0; x < stringCount; x++ ) 
+    for( let x = 0; x < stringCount + 1; x++ ) 
     {
         ctx.moveTo( offset.left,                   offset.top + ( x * stringGap ) ) 
         ctx.lineTo( offset.left + fretboard.width, offset.top + ( x * stringGap ))
+
+        ctx.fillStyle = colours.leftClick
+        ctx.font = "17px Poppins"
+        ctx.textAlign = "center"
+        ctx.fillText( 
+            data.strings[ x ].pitch.toUpperCase(),
+            10, 
+            offset.top + ( x * stringGap ) + 5,
+        )
     }
     
     for( let x = 0; x < fretCount; x++ ) 
