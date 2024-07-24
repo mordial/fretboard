@@ -47,7 +47,7 @@ input[ type="number" ], input[ type="text" ] {
     height: 40%;
     max-width: 1920px;
     top: 25%; 
-    max-height: 300px;
+    max-height: 330px;
     min-height: 200px;
 }
 
