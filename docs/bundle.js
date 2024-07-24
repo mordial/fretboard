@@ -386,9 +386,22 @@ function loadPreset( data )
     if( !input ) return 
 
     try {
-        root  = input.split( ' ' )[ 0 ].toLowerCase().replace( /\s/g, '' ) 
-        scale = input.split( ' ' )[ 1 ].toLowerCase().replace( /\s/g, '' )
-    } catch ( e ) { return }
+        let words = input.split( ' ' )
+
+        words.forEach( word => word.toLowerCase().replace( /\s/g, '' ) )
+        
+        words = words.filter( word => word.trim() != '' )
+
+        root = words[ 0 ] 
+
+        words.splice( 0, 1 ) 
+
+        scale = words.join( ' ' ) 
+
+    } catch ( e ) { 
+        console.log( e ) 
+        return 
+    }
 
     if( !_main__WEBPACK_IMPORTED_MODULE_0__.notes[ data.accidentals ].includes( root ) ) 
     {
