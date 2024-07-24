@@ -19,7 +19,6 @@ export default function loadPreset( data )
     }
     if( Object.keys( presets ).includes( scale ) ) 
     {
-        //Load them notes bro!!!
         solveFrets( data, root, presets[ scale ] ) 
     } 
     else {

@@ -1,1 +1,543 @@
-(()=>{"use strict";var t,e,n={},r={};function i(t){var e=r[t];if(void 0!==e)return e.exports;var l=r[t]={exports:{}};return n[t](l,l.exports,i),l.exports}e=Object.getPrototypeOf?t=>Object.getPrototypeOf(t):t=>t.__proto__,i.t=function(n,r){if(1&r&&(n=this(n)),8&r)return n;if("object"==typeof n&&n){if(4&r&&n.__esModule)return n;if(16&r&&"function"==typeof n.then)return n}var l=Object.create(null);i.r(l);var o={};t=t||[null,e({}),e([]),e(e)];for(var c=2&r&&n;"object"==typeof c&&!~t.indexOf(c);c=e(c))Object.getOwnPropertyNames(c).forEach((t=>o[t]=()=>n[t]));return o.default=()=>n,i.d(l,o),l},i.d=(t,e)=>{for(var n in e)i.o(e,n)&&!i.o(t,n)&&Object.defineProperty(t,n,{enumerable:!0,get:e[n]})},i.o=(t,e)=>Object.prototype.hasOwnProperty.call(t,e),i.r=t=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},i.d({},{E:()=>v,Q:()=>b});const l=JSON.parse('{"major":[2,2,1,2,2,2,1],"minor":[2,1,2,2,1,2,2],"ionian":[2,2,1,2,2,2,1],"dorian":[2,1,2,2,2,1,2],"phrygian":[1,2,2,2,1,2,2],"lydian":[2,2,2,1,2,2,1],"mixolydian":[2,2,1,2,2,1,2],"aeolian":[2,1,2,2,1,2,2],"locrian":[1,2,2,1,2,2,2],"harmonic minor":[2,1,2,2,1,3,1],"melodic minor":[2,1,2,2,2,2,1]}');var o=i.t(l,2);const c={rightClick:"#ff7f50",leftClick:"#669999"};let s,a,d,f,g,u,p={},h={top:30,bottom:50,left:20,right:20};function m(t,e,n){let r=t.offsetX-h.left,i=t.offsetY-h.top+s/2;r<0&&(r=0),i<0&&(i=0),r=Math.floor(r/a)+e.startFret,i=Math.floor(i/s),i>u&&(i=u);let l=!1;for(let t in e.strings[i].selected){let o=e.strings[i].selected[t];o.fret===r&&(o.colour!==c.rightClick||n?o.colour===c.leftClick&&n?o.colour=c.rightClick:e.strings[i].selected.splice(t,1):o.colour=c.leftClick,l=!0)}l||e.strings[i].selected.push({fret:r,colour:n?"#ff7f50":"#669999"}),v()}let y=35;const b={sharps:["a","a#","b","c","c#","d","d#","e","f","f#","g","g#"],flats:["a","bb","b","c","db","d","eb","e","f","gb","g","ab"]};let F={startFret:void 0,endFret:void 0,accidentals:void 0,strings:[]};function v(){let t={frets:document.getElementById("frets-input"),tuning:document.getElementById("tuning-input"),accidentals:document.querySelector('input[name="accidentals"]:checked')};F.tuning=t.tuning.value.replace(/\s/g,"").toLowerCase().split(",").reverse();let e=t.frets.value.replace(/\s/g,"").split("-");F.startFret=parseInt(e[0]),F.endFret=parseInt(e[1]),(isNaN(F.startFret)||isNaN(F.endFret))&&(F.startFret=0,F.endFret=24),F.startFret=F.startFret>=F.endFret?0:F.startFret,F.endFret=F.endFret>y?y:F.endFret,t.frets.value=F.startFret+"-"+F.endFret,F.accidentals=t.accidentals.value,function(){for(let t of F.tuning)if(!b[F.accidentals].includes(t))return!1}(),function(){for(let t in F.tuning)F.strings[t]||(F.strings[t]={selected:[]}),F.strings[t].pitch=F.tuning[t];for(let t in F.strings)if(t>=F.tuning.length)F.strings.splice(t,1);else for(let e in F.strings[t].selected)(F.strings[t].selected[e].fret>F.endFret||F.strings[t].selected[e].fret<F.startFret)&&F.strings[t].selected.splice(e,1);!function(t){!function(t){d=document.getElementById("fretboard"),f=d.getContext("2d"),g=t.endFret-t.startFret+1,u=t.strings.length-1,d.style.width=g<=20?50*g+"px":"70%";let e=d.getBoundingClientRect();d.height=Math.floor(e.height),d.width=Math.floor(e.width),p={height:d.height-h.top-h.bottom,width:d.width-h.left-h.right},s=p.height/u,a=p.width/g}(t),f.clearRect(0,0,d.width,d.height),f.beginPath(),f.lineWidth=2,f.rect(h.left,h.top,p.width,p.height);for(let t=0;t<u;t++)f.moveTo(h.left,h.top+t*s),f.lineTo(h.left+p.width,h.top+t*s);for(let e=0;e<g;e++)f.moveTo(h.left+e*a,h.top),f.lineTo(h.left+e*a,h.top+p.height),f.fillStyle=c.leftClick,f.font="17px Poppins",f.textAlign="center",f.fillText(e+t.startFret,h.left+e*a+a/2,h.top+p.height+40);f.stroke();for(let e in t.strings)for(let n in t.strings[e].selected){let r=t.strings[e].selected[n];f.beginPath();let i=.6*a/2;i>20&&(i=20),f.arc(h.left+(r.fret-t.startFret)*a+a/2,h.top+e*s,i,0,2*Math.PI),f.fillStyle=r.colour,f.fill(),f.stroke(),f.beginPath(),f.fillStyle="white",f.font=a/5+"px Poppins",f.textAlign="center";let l=b[t.accidentals].indexOf(t.strings[e].pitch),o=b[t.accidentals][(l+r.fret)%12];o=o.charAt(0).toUpperCase()+o.slice(1),f.fillText(o,h.left+(r.fret-t.startFret)*a+a/2,h.top+e*s+a/13),f.stroke()}}(F)}()}function w(){for(let t of F.strings)t.selected=[];v()}function k(){let t=document.createElement("a");t.download="fretboard.png",t.href=document.getElementById("fretboard").toDataURL(),t.click()}window.onload=function(){[...document.getElementsByTagName("input")].forEach((t=>{"scale-input"===t.id?t.onchange=function(){!function(t){let e,n,r=document.getElementById("scale-input").value;try{e=r.split(" ")[0].toLowerCase().replace(/\s/g,""),n=r.split(" ")[1].toLowerCase().replace(/\s/g,"")}catch(t){return}b[t.accidentals].includes(e)?Object.keys(o).includes(n)?function(t,e,n){let r=b[t.accidentals].indexOf(e),i=[];for(let e of n)i.push(b[t.accidentals][r%12]),r+=e;for(let e of t.strings)e.selected=[];for(let n in t.strings){r=b[t.accidentals].indexOf(t.strings[n].pitch);for(let l=t.startFret;l<=t.endFret;l++){let o=b[t.accidentals][(l+r)%12];i.includes(o)&&t.strings[n].selected.push({fret:l,colour:o===e?c.rightClick:c.leftClick})}}v()}(t,e,o[n]):alert("Scale not found"):alert("Incorrect accidentals entered")}(F)}:t.onchange=v})),document.getElementById("fretboard").onclick=function(t){m(t,F,!1)},document.getElementById("fretboard").addEventListener("contextmenu",(function(t){t.preventDefault(),m(t,F,!0)}),!1),window.addEventListener("resize",v),document.getElementById("clear").onclick=w,document.getElementById("download").onclick=k,v()}})();
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./src/canvas.js":
+/*!***********************!*\
+  !*** ./src/canvas.js ***!
+  \***********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   clicked: () => (/* binding */ clicked),
+/* harmony export */   colours: () => (/* binding */ colours),
+/* harmony export */   draw: () => (/* binding */ draw)
+/* harmony export */ });
+/* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./main */ "./src/main.js");
+/* harmony import */ var _presets__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./presets */ "./src/presets.js");
+
+
+
+const colours = {
+    rightClick: '#ff7f50',
+     leftClick: '#669999' 
+}
+let stringGap, fretGap, canvas, ctx, fretCount, stringCount
+let fretboard = {}
+let offset = {
+    top: 30,
+ bottom: 50,
+   left: 20,
+  right: 20 
+}
+
+function draw( data ) 
+{
+    setValues( data ) 
+
+    ctx.clearRect( 0, 0, canvas.width, canvas.height)
+    ctx.beginPath()
+    ctx.lineWidth = 2
+
+    ctx.rect(
+        offset.left,
+        offset.top,
+        fretboard.width,
+        fretboard.height 
+    ) 
+
+    for( let x = 0; x < stringCount; x++ ) 
+    {
+        ctx.moveTo( offset.left,                   offset.top + ( x * stringGap ) ) 
+        ctx.lineTo( offset.left + fretboard.width, offset.top + ( x * stringGap ))
+    }
+    
+    for( let x = 0; x < fretCount; x++ ) 
+    {
+        ctx.moveTo( offset.left + ( x * fretGap ), offset.top )
+        ctx.lineTo( offset.left + ( x * fretGap ), offset.top + fretboard.height ) 
+
+        ctx.fillStyle = colours.leftClick
+        ctx.font = "17px Poppins"
+        ctx.textAlign = "center"
+        ctx.fillText( 
+            x + data.startFret,
+            offset.left + ( x * fretGap ) + fretGap / 2, 
+            offset.top + fretboard.height + 40 
+        )
+    }
+
+    ctx.stroke()
+
+    for( let x in data.strings ) 
+    { 
+        for( let y in data.strings[ x ].selected ) 
+        {
+            let selected = data.strings[ x ].selected[ y ]
+
+            ctx.beginPath() 
+
+            let radius = ( fretGap * 0.6 ) / 2 
+            if( radius > 20 ) radius = 20
+
+            ctx.arc( 
+                offset.left + ( ( selected.fret - data.startFret ) * fretGap ) + ( fretGap / 2 ), 
+                offset.top + ( x * stringGap ),
+                radius, 0, 2 * Math.PI
+            )
+
+            ctx.fillStyle = selected.colour 
+
+            ctx.fill() 
+            ctx.stroke()
+            ctx.beginPath()
+
+            ctx.fillStyle = 'white'
+            ctx.font = `${ fretGap / 5 }px Poppins`
+            ctx.textAlign = "center"
+
+            let rootOffset = _main__WEBPACK_IMPORTED_MODULE_0__.notes[ data.accidentals ].indexOf( data.strings[ x ].pitch )
+
+            let note = _main__WEBPACK_IMPORTED_MODULE_0__.notes[ data.accidentals ][ ( rootOffset + selected.fret ) % 12 ] 
+            note = note.charAt( 0 ).toUpperCase() + note.slice( 1 )
+
+            ctx.fillText( note, 
+                offset.left + ( ( selected.fret - data.startFret ) * fretGap ) + ( fretGap / 2 ), 
+                offset.top + ( x * stringGap ) + ( fretGap / 13 )
+            ) 
+
+            ctx.stroke() 
+        }
+    }
+}
+
+
+
+function clicked( event, data, rightClick )
+{
+    let x = event.offsetX - offset.left 
+    let y = event.offsetY - offset.top + ( stringGap / 2 ) 
+
+    if( x < 0 ) x = 0 
+    if( y < 0 ) y = 0 
+ 
+    x = Math.floor( x / fretGap ) + data.startFret
+    y = Math.floor( y / stringGap ) 
+
+    if( y > stringCount ) y = stringCount 
+    
+    let fretAlreadySelected = false
+
+    for( let f in data.strings[ y ].selected ) 
+    {
+        let selected = data.strings[ y ].selected[ f ]
+
+        if( selected.fret === x ) 
+        {
+            if( selected.colour === colours.rightClick && !rightClick ) 
+            {
+                selected.colour = colours.leftClick
+            } 
+            else if ( selected.colour === colours.leftClick && rightClick ) 
+            {
+                selected.colour = colours.rightClick
+            } 
+            else 
+            {
+                data.strings[ y ].selected.splice( f, 1 ) 
+            }
+            fretAlreadySelected = true 
+        }
+    }
+    if( !fretAlreadySelected ) 
+    {
+        data.strings[ y ].selected.push( { 
+            fret: x, 
+            colour: rightClick ? '#ff7f50' : '#669999' 
+        })
+    }
+    (0,_main__WEBPACK_IMPORTED_MODULE_0__.gatherParameters)()
+}
+
+
+
+function setValues( data ) 
+{
+    canvas = document.getElementById( 'fretboard' ) 
+    ctx    = canvas.getContext( '2d' ) 
+
+    fretCount   = data.endFret - data.startFret + 1
+    stringCount = data.strings.length - 1
+
+    if( fretCount <= 20 ) 
+    {
+        canvas.style.width = ( fretCount * 50 ) + 'px'
+    } else 
+    {
+        canvas.style.width = "70%" 
+    }
+
+    let dimensions = canvas.getBoundingClientRect() 
+
+    canvas.height = Math.floor( dimensions.height )
+    canvas.width  = Math.floor( dimensions.width  )  
+
+    fretboard = {
+        height: canvas.height - offset.top - offset.bottom,
+         width: canvas.width - offset.left - offset.right,
+    }
+
+    stringGap = fretboard.height / stringCount   
+    fretGap   = fretboard.width  / fretCount
+}
+
+/***/ }),
+
+/***/ "./src/main.js":
+/*!*********************!*\
+  !*** ./src/main.js ***!
+  \*********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   gatherParameters: () => (/* binding */ gatherParameters),
+/* harmony export */   notes: () => (/* binding */ notes)
+/* harmony export */ });
+/* harmony import */ var _canvas__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./canvas */ "./src/canvas.js");
+/* harmony import */ var _presets__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./presets */ "./src/presets.js");
+
+
+
+let maxFrets = 35
+
+const notes = {
+    sharps: [ 'a', 'a#', 'b', 'c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#' ],
+    flats:  [ 'a', 'bb', 'b', 'c', 'db', 'd', 'eb', 'e', 'f', 'gb', 'g', 'ab' ]
+}
+
+let data = {
+    startFret: undefined, 
+      endFret: undefined, 
+  accidentals: undefined, 
+      strings: []
+}
+
+window.onload = function() 
+{
+    registerEventListeners() 
+    gatherParameters() 
+}
+
+
+function registerEventListeners() 
+{
+    [ ...document.getElementsByTagName( 'input' ) ].forEach( 
+        input => 
+        {
+            if( input.id === 'scale-input' ) { 
+                input.onchange = function() {
+                    (0,_presets__WEBPACK_IMPORTED_MODULE_1__["default"])( data )
+                }
+            } else {
+                input.onchange = gatherParameters
+            }
+        }
+    )
+
+    document.getElementById( 'fretboard' ).onclick = function( event ) 
+    { 
+        ;(0,_canvas__WEBPACK_IMPORTED_MODULE_0__.clicked)( event, data, false  ) 
+    }
+
+    document.getElementById( 'fretboard' ).addEventListener('contextmenu', 
+        function( event ) 
+        {
+            event.preventDefault() 
+            ;(0,_canvas__WEBPACK_IMPORTED_MODULE_0__.clicked)( event, data, true ) 
+        }, 
+        false
+    )
+
+    window.addEventListener( 'resize', gatherParameters )
+
+    document.getElementById( 'clear'    ).onclick = clearFretboard
+    document.getElementById( 'download' ).onclick = downloadFretboard
+}
+
+
+function gatherParameters()
+{
+    let inputs = {
+              frets: document.getElementById( 'frets-input' ),
+             tuning: document.getElementById( 'tuning-input' ),
+        accidentals: document.querySelector( 'input[name="accidentals"]:checked' )
+    }
+
+    data.tuning = inputs.tuning.value
+        .replace( /\s/g, '' )
+        .toLowerCase() 
+        .split( ',' )
+        .reverse() 
+
+    let frets = inputs.frets.value
+        .replace( /\s/g, '' ) 
+        .split( '-' )
+
+    data.startFret = parseInt( frets[ 0 ] )
+    data.endFret   = parseInt( frets[ 1 ] )
+
+    if( isNaN( data.startFret ) || isNaN( data.endFret ) ) 
+    {
+        data.startFret = 0
+        data.endFret   = 24
+    }
+
+    data.startFret = data.startFret >= data.endFret ? 0 : data.startFret
+    data.endFret   = data.endFret > maxFrets ? maxFrets : data.endFret 
+
+    inputs.frets.value = data.startFret + '-' + data.endFret
+
+    data.accidentals = inputs.accidentals.value 
+
+    if( !checkAccidentals() ) { /* Invalid tuning */ }   
+
+    buildStrings() 
+}
+
+
+function buildStrings( ) 
+{
+    for( let x in data.tuning ) 
+    {
+        if( !data.strings[ x ] ) data.strings[ x ] = { selected: [] } 
+        data.strings[ x ].pitch = data.tuning[ x ]    
+    }
+    for( let x = Object.keys( data.strings ).length; x >= 0; x-- ) 
+    {
+        if( x >= data.tuning.length ) {
+            data.strings.splice( x, 1 )
+            continue
+        }
+        for( let y in data.strings[ x ].selected ) {
+            if( data.strings[ x ].selected[ y ].fret > data.endFret ||
+                data.strings[ x ].selected[ y ].fret < data.startFret 
+            ) {
+                data.strings[ x ].selected.splice( y, 1 ) 
+            }
+        }
+    }
+    (0,_canvas__WEBPACK_IMPORTED_MODULE_0__.draw)( data ) 
+}
+
+
+function checkAccidentals()
+{
+    for( let x of data.tuning ) 
+        if( !notes[ data.accidentals ].includes( x ) ) return false 
+    return true 
+}
+
+
+function clearFretboard() 
+{
+    for( let x of data.strings ) x.selected = [] 
+    gatherParameters() 
+}
+
+
+function downloadFretboard() 
+{
+    let link = document.createElement('a')
+    link.download = 'fretboard.png'
+    link.href = document.getElementById( 'fretboard' ).toDataURL()
+    link.click()
+}
+
+/***/ }),
+
+/***/ "./src/presets.js":
+/*!************************!*\
+  !*** ./src/presets.js ***!
+  \************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+var _docs_presets_json__WEBPACK_IMPORTED_MODULE_2___namespace_cache;
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ loadPreset)
+/* harmony export */ });
+/* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./main */ "./src/main.js");
+/* harmony import */ var _canvas__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./canvas */ "./src/canvas.js");
+/* harmony import */ var _docs_presets_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../docs/presets.json */ "./docs/presets.json");
+ 
+
+ 
+
+
+function loadPreset( data )
+{
+    let input = document.getElementById( 'scale-input' ).value, root, scale 
+
+    try {
+        root  = input.split( ' ' )[ 0 ].toLowerCase().replace( /\s/g, '' ) 
+        scale = input.split( ' ' )[ 1 ].toLowerCase().replace( /\s/g, '' )
+    } catch ( e ) { return }
+
+    if( !_main__WEBPACK_IMPORTED_MODULE_0__.notes[ data.accidentals ].includes( root ) ) 
+    {
+        alert( 'Incorrect accidentals entered' )
+        return 
+    }
+    if( Object.keys( /*#__PURE__*/ (_docs_presets_json__WEBPACK_IMPORTED_MODULE_2___namespace_cache || (_docs_presets_json__WEBPACK_IMPORTED_MODULE_2___namespace_cache = __webpack_require__.t(_docs_presets_json__WEBPACK_IMPORTED_MODULE_2__, 2))) ).includes( scale ) ) 
+    {
+        solveFrets( data, root, /*#__PURE__*/ (_docs_presets_json__WEBPACK_IMPORTED_MODULE_2___namespace_cache || (_docs_presets_json__WEBPACK_IMPORTED_MODULE_2___namespace_cache = __webpack_require__.t(_docs_presets_json__WEBPACK_IMPORTED_MODULE_2__, 2)))[ scale ] ) 
+    } 
+    else {
+        alert( 'Scale not found' ) 
+    }
+}
+
+
+function solveFrets( data, root, intervals ) 
+{
+    let index = _main__WEBPACK_IMPORTED_MODULE_0__.notes[ data.accidentals ].indexOf( root )
+
+    let scaleTones = [] 
+
+    for( let x of intervals ) {
+        scaleTones.push( _main__WEBPACK_IMPORTED_MODULE_0__.notes[ data.accidentals ][ index % 12 ] ) 
+        index += x  
+    }
+
+    for( let x of data.strings ) x.selected = [] 
+
+    for( let x in data.strings ) {
+
+        index = _main__WEBPACK_IMPORTED_MODULE_0__.notes[ data.accidentals ].indexOf( data.strings[ x ].pitch )
+
+        for( let y = data.startFret; y <= data.endFret; y++ ) {
+
+            let note = _main__WEBPACK_IMPORTED_MODULE_0__.notes[ data.accidentals ][ ( y + index ) % 12 ] 
+
+            if( scaleTones.includes( note ) ) {
+
+                data.strings[ x ].selected.push({
+                    fret: y, colour: note === root ? _canvas__WEBPACK_IMPORTED_MODULE_1__.colours.rightClick : _canvas__WEBPACK_IMPORTED_MODULE_1__.colours.leftClick 
+                })
+            } 
+
+        } 
+    }
+
+    (0,_main__WEBPACK_IMPORTED_MODULE_0__.gatherParameters)() 
+}
+
+/***/ }),
+
+/***/ "./docs/presets.json":
+/*!***************************!*\
+  !*** ./docs/presets.json ***!
+  \***************************/
+/***/ ((module) => {
+
+module.exports = /*#__PURE__*/JSON.parse('{"major":[2,2,1,2,2,2,1],"minor":[2,1,2,2,1,2,2],"ionian":[2,2,1,2,2,2,1],"dorian":[2,1,2,2,2,1,2],"phrygian":[1,2,2,2,1,2,2],"lydian":[2,2,2,1,2,2,1],"mixolydian":[2,2,1,2,2,1,2],"aeolian":[2,1,2,2,1,2,2],"locrian":[1,2,2,1,2,2,2],"harmonic minor":[2,1,2,2,1,3,1],"melodic minor":[2,1,2,2,2,2,1]}');
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/create fake namespace object */
+/******/ 	(() => {
+/******/ 		var getProto = Object.getPrototypeOf ? (obj) => (Object.getPrototypeOf(obj)) : (obj) => (obj.__proto__);
+/******/ 		var leafPrototypes;
+/******/ 		// create a fake namespace object
+/******/ 		// mode & 1: value is a module id, require it
+/******/ 		// mode & 2: merge all properties of value into the ns
+/******/ 		// mode & 4: return value when already ns object
+/******/ 		// mode & 16: return value when it's Promise-like
+/******/ 		// mode & 8|1: behave like require
+/******/ 		__webpack_require__.t = function(value, mode) {
+/******/ 			if(mode & 1) value = this(value);
+/******/ 			if(mode & 8) return value;
+/******/ 			if(typeof value === 'object' && value) {
+/******/ 				if((mode & 4) && value.__esModule) return value;
+/******/ 				if((mode & 16) && typeof value.then === 'function') return value;
+/******/ 			}
+/******/ 			var ns = Object.create(null);
+/******/ 			__webpack_require__.r(ns);
+/******/ 			var def = {};
+/******/ 			leafPrototypes = leafPrototypes || [null, getProto({}), getProto([]), getProto(getProto)];
+/******/ 			for(var current = mode & 2 && value; typeof current == 'object' && !~leafPrototypes.indexOf(current); current = getProto(current)) {
+/******/ 				Object.getOwnPropertyNames(current).forEach((key) => (def[key] = () => (value[key])));
+/******/ 			}
+/******/ 			def['default'] = () => (value);
+/******/ 			__webpack_require__.d(ns, def);
+/******/ 			return ns;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/main.js");
+/******/ 	
+/******/ })()
+;
+//# sourceMappingURL=bundle.js.map

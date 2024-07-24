@@ -105,7 +105,7 @@ function buildStrings( )
         if( !data.strings[ x ] ) data.strings[ x ] = { selected: [] } 
         data.strings[ x ].pitch = data.tuning[ x ]    
     }
-    for( let x in data.strings ) 
+    for( let x = Object.keys( data.strings ).length; x >= 0; x-- ) 
     {
         if( x >= data.tuning.length ) {
             data.strings.splice( x, 1 )
