@@ -1,6 +1,6 @@
 import { gatherParameters, notes } from './main' 
 import { colours } from './canvas'
-import * as presets from '../presets.json' 
+import * as presets from '../docs/presets.json' 
 
 
 export default function loadPreset( data )
@@ -41,8 +41,6 @@ function solveFrets( data, root, intervals )
 
     for( let x of data.strings ) x.selected = [] 
 
-    console.log( scaleTones )
-
     for( let x in data.strings ) {
 
         index = notes[ data.accidentals ].indexOf( data.strings[ x ].pitch )
@@ -52,8 +50,6 @@ function solveFrets( data, root, intervals )
             let note = notes[ data.accidentals ][ ( y + index ) % 12 ] 
 
             if( scaleTones.includes( note ) ) {
-
-                console.log( data.strings[ x ].pitch, y , note )
 
                 data.strings[ x ].selected.push({
                     fret: y, colour: note === root ? colours.rightClick : colours.leftClick 
