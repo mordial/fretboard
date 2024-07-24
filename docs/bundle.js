@@ -58,7 +58,7 @@ function draw( data )
         ctx.fillText( 
             data.strings[ x ].pitch.toUpperCase(),
             10, 
-            offset.top + ( x * stringGap ) + 5,
+            offset.top + ( x * stringGap ) + 6,
         )
     }
     
