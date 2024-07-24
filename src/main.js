@@ -25,15 +25,8 @@ window.onload = function()
 function registerEventListeners() 
 {
     [ ...document.getElementsByTagName( 'input' ) ].forEach( 
-        input => 
-        {
-            if( input.id === 'scale-input' ) { 
-                input.onchange = function() {
-                    loadPreset( data )
-                }
-            } else {
-                input.onchange = gatherParameters
-            }
+        input => {
+            input.onchange = gatherParameters
         }
     )
 
@@ -119,6 +112,7 @@ function buildStrings( )
             }
         }
     }
+    loadPreset( data )
     draw( data ) 
 }
 

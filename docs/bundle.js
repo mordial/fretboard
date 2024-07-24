@@ -234,15 +234,8 @@ window.onload = function()
 function registerEventListeners() 
 {
     [ ...document.getElementsByTagName( 'input' ) ].forEach( 
-        input => 
-        {
-            if( input.id === 'scale-input' ) { 
-                input.onchange = function() {
-                    (0,_presets__WEBPACK_IMPORTED_MODULE_1__["default"])( data )
-                }
-            } else {
-                input.onchange = gatherParameters
-            }
+        input => {
+            input.onchange = gatherParameters
         }
     )
 
@@ -328,7 +321,8 @@ function buildStrings( )
             }
         }
     }
-    (0,_canvas__WEBPACK_IMPORTED_MODULE_0__.draw)( data ) 
+    (0,_presets__WEBPACK_IMPORTED_MODULE_1__["default"])( data )
+    ;(0,_canvas__WEBPACK_IMPORTED_MODULE_0__.draw)( data ) 
 }
 
 
@@ -379,6 +373,8 @@ __webpack_require__.r(__webpack_exports__);
 function loadPreset( data )
 {
     let input = document.getElementById( 'scale-input' ).value, root, scale 
+
+    if( !input ) return 
 
     try {
         root  = input.split( ' ' )[ 0 ].toLowerCase().replace( /\s/g, '' ) 
@@ -431,7 +427,6 @@ function solveFrets( data, root, intervals )
         } 
     }
 
-    (0,_main__WEBPACK_IMPORTED_MODULE_0__.gatherParameters)() 
 }
 
 /***/ }),

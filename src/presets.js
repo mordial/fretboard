@@ -7,6 +7,8 @@ export default function loadPreset( data )
 {
     let input = document.getElementById( 'scale-input' ).value, root, scale 
 
+    if( !input ) return 
+
     try {
         root  = input.split( ' ' )[ 0 ].toLowerCase().replace( /\s/g, '' ) 
         scale = input.split( ' ' )[ 1 ].toLowerCase().replace( /\s/g, '' )
@@ -58,5 +60,4 @@ function solveFrets( data, root, intervals )
         } 
     }
 
-    gatherParameters() 
 }
