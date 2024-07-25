@@ -44,11 +44,10 @@ input[ type="number" ], input[ type="text" ] {
 
 #fretboard {
     position: absolute;
-    height: 40%;
+    height: 50%;
     max-width: 1920px;
     top: 30%; 
-    max-height: 330px;
-    min-height: 200px;
+    max-height: 400px;
 }
 
 fieldset {

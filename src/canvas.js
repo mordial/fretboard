@@ -69,7 +69,7 @@ export function draw( data )
 
             ctx.beginPath() 
 
-            let radius = ( fretGap * 0.6 ) / 2 
+            let radius = ( fretGap * 0.7 ) / 2 
             if( radius > 20 ) radius = 20
 
             ctx.arc( 
@@ -161,12 +161,14 @@ function setValues( data )
     fretCount   = data.endFret - data.startFret + 1
     stringCount = data.strings.length - 1
 
+    canvas.style.height = ( data.strings.length * 8 ) + '%'
+
     if( fretCount <= 20 ) 
     {
         canvas.style.width = ( fretCount * 50 ) + 'px'
     } else 
     {
-        canvas.style.width = "70%" 
+        canvas.style.width = "80%" 
     }
 
     let dimensions = canvas.getBoundingClientRect() 

@@ -12,8 +12,8 @@ export default function loadPreset( data )
     try {
         let words = input.split( ' ' )
 
-        words.forEach( word => word.toLowerCase().replace( /\s/g, '' ) )
-        
+        words = words.map( word => word.toLowerCase().replace( /\s/g, '' ) )
+
         words = words.filter( word => word.trim() != '' )
 
         root = words[ 0 ] 
